@@ -140,7 +140,7 @@ def mods_for(name, lctl_action, lalt_action):
         "caps": None,  # 由每层显式给
         "lalt": lalt_action,
         "lctl": lctl_action,
-        "esc": "grv",
+        "esc": "esc",
         "ralt": "left",
     }
 
