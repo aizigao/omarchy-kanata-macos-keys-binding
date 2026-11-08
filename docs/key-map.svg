@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640" role="img" aria-labelledby="title desc">
+  <title id="title">macOS 位置习惯：物理键与 Kanata 输出</title>
+  <desc id="desc">左 Alt 作为 Command 位置输出 Ctrl；左 Ctrl 输出 Alt；CapsLock 轻按 Esc，按住进入 Emacs 层或在终端输出右 Ctrl。Super 原样保留。</desc>
+  <defs>
+    <style>text{font-family:system-ui,'Noto Sans CJK SC',sans-serif;fill:#e2e8f0}.h{font-size:28px;font-weight:700}.label{font-size:19px;font-weight:600}.small{font-size:16px;fill:#cbd5e1}.key{fill:#1e293b;stroke:#64748b;stroke-width:2}.arrow{stroke:#38bdf8;stroke-width:3;marker-end:url(#a)}</style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#38bdf8" stroke-width="2"/></marker>
+  </defs>
+  <rect width="1000" height="640" rx="20" fill="#0f172a"/>
+  <text x="40" y="55" class="h">物理键 → Kanata 输出 → 使用习惯</text>
+  <text x="40" y="88" class="small">Linux 键盘左 Alt 占据 ⌘ 的位置；应用收到的仍是 Linux 快捷键</text>
+  <text x="50" y="134" class="small">物理键</text><text x="330" y="134" class="small">输出 / 分层</text><text x="655" y="134" class="small">用途</text>
+  <g>
+    <rect x="40" y="155" width="200" height="65" rx="12" class="key"/><text x="70" y="195" class="label">左 Alt（⌘ 位）</text>
+    <path d="M250 187H305" class="arrow"/><rect x="325" y="155" width="275" height="65" rx="12" class="key"/><text x="345" y="195" class="label">保持 Ctrl + meta 层</text>
+    <text x="645" y="182" class="label">常用快捷键 / 鼠标组合</text><text x="645" y="208" class="small">C/V 走专用路径，见流程图</text>
+    <rect x="40" y="240" width="200" height="65" rx="12" class="key"/><text x="70" y="280" class="label">左 Ctrl（⌥ 位）</text>
+    <path d="M250 272H305" class="arrow"/><rect x="325" y="240" width="275" height="65" rx="12" class="key"/><text x="345" y="280" class="label">Alt / alt 层</text>
+    <text x="645" y="267" class="label">Meta 编辑键 / Alt+Tab</text><text x="645" y="293" class="small">部分映射随窗口类型变化</text>
+    <rect x="40" y="325" width="200" height="65" rx="12" class="key"/><text x="70" y="365" class="label">CapsLock</text>
+    <path d="M250 357H305" class="arrow"/><rect x="325" y="325" width="275" height="65" rx="12" class="key"/><text x="345" y="352" class="label">轻按 Esc · 按住分层</text><text x="345" y="378" class="small">终端中按住输出右 Ctrl</text>
+    <text x="645" y="352" class="label">Emacs 导航</text><text x="645" y="378" class="small">B/F/P/N 方向 · A/E 行首尾</text>
+    <rect x="40" y="410" width="200" height="65" rx="12" class="key"/><text x="70" y="450" class="label">右 Ctrl / Super</text>
+    <path d="M250 442H305" class="arrow"/><rect x="325" y="410" width="275" height="65" rx="12" class="key"/><text x="345" y="450" class="label">原样透传</text>
+    <text x="645" y="437" class="label">终端中断 / 桌面快捷键</text><text x="645" y="463" class="small">右 Ctrl 不触发全局 Emacs 层</text>
+  </g>
+  <rect x="40" y="510" width="920" height="96" rx="12" fill="#172554"/>
+  <text x="60" y="542" class="label">与 macOS 仍有差异</text>
+  <text x="60" y="570" class="small">左 Alt+Tab → Ctrl+Tab（切标签） · 左 Alt+左右 → Ctrl+左右（通常按词移动）</text>
+  <text x="60" y="594" class="small">物理 Esc → 反引号 · 右 Alt → 左方向 · IDE / Zed 的左 Alt+W 是 Vim 窗口关闭宏</text>
+</svg>

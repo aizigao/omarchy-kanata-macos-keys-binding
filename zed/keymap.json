@@ -1,0 +1,9 @@
+[
+  {
+    "context": "Editor && !menu",
+    "bindings": {
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-v": "editor::Paste"
+    }
+  }
+]

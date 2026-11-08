@@ -1,0 +1,14 @@
+[Unit]
+Description=Switch kanata base layer by focused window / omarchy overlay
+After=graphical-session.target kanata.service
+PartOf=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/kanata-window-layer
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

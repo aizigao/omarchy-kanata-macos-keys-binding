@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+"""按当前窗口/浮层切换 kanata 的 base layer —— 替代 xremap 的 application: 过滤。
+
+xremap 能按窗口 class 做条件，kanata 不能，所以这个脚本做桥：
+每隔 POLL 秒看一次「有没有 omarchy 浮层」+「当前聚焦窗口是谁」，
+需要时通过 kanata 的 TCP server 发一条 ChangeLayer。
+
+- 浮层（omarchy menu / snippets 面板 / emoji 选择器等）→ base
+  （浮层不是窗口，kanata 这边只能靠这里补上；这样从 kitty 里唤起面板也能拿到
+   base layer 的行为，而不是终端的）
+- 终端（kitty / alacritty）→ terminal
+- IDE / 编辑器（jetbrains-* / Code / Windsurf）→ editor
+- Zed → zed（左 Alt+C/V 统一发 Ctrl+Shift+C/V，右 Ctrl 的规则同 editor）
+- 其他 → base
+
+kanata 必须以 -p <port> 启动（TCP server）。本脚本只发消息，不改 kanata 配置。
+环境变量：KANATA_PORT（默认 10000）、POLL（默认 0.3 秒）、QUIET=1 关掉日志。
+"""
+
+import json
+import os
+import socket
+import subprocess
+import sys
+import time
+
+PORT = int(os.environ.get("KANATA_PORT", "10000"))
+POLL = float(os.environ.get("POLL", "0.3"))
+QUIET = os.environ.get("QUIET") == "1"
+
+TERMINALS = {"kitty", "alacritty"}
+EDITORS = {
+    "jetbrains-webstorm",
+    "jetbrains-studio",
+    "code",
+    "windsurf",
+}
+# 会抢键盘焦点的 omarchy 浮层（layer-shell namespace）
+PANELS = {
+    "omarchy-menu",       # keystroke 的菜单/palette
+    "omarchy-clipboard",  # clipboard + snippets 面板
+    "omarchy-omacast",    # omacast（已禁用，留着无妨）
+    "omarchy-emojis",
+    "omarchy-image-picker",
+}
+
+
+def log(msg):
+    if not QUIET:
+        print(msg, flush=True)
+
+
+def hyprctl_json(*args):
+    try:
+        out = subprocess.run(
+            ["hyprctl", "-j", *args], capture_output=True, text=True, timeout=3
+        )
+        if out.returncode != 0:
+            return None
+        return json.loads(out.stdout or "null")
+    except Exception:
+        return None
+
+
+def panel_open():
+    layers = hyprctl_json("layers")
+    if not isinstance(layers, dict):
+        return False
+    for monitor in layers.values():
+        for items in ((monitor or {}).get("levels") or {}).values():
+            for item in items or []:
+                if (item or {}).get("namespace") in PANELS:
+                    return True
+    return False
+
+
+def wanted_layer():
+    if panel_open():
+        return "base"
+    win = hyprctl_json("activewindow") or {}
+    cls = str(win.get("class") or "").lower()
+    if cls in TERMINALS:
+        return "terminal"
+    if cls in {"dev.zed.zed", "dev.zed.zed-preview"}:
+        return "zed"
+    if cls in EDITORS:
+        return "editor"
+    return "base"
+
+
+def send_layer(name):
+    msg = json.dumps({"ChangeLayer": {"new": name}}).encode() + b"\n"
+    try:
+        with socket.create_connection(("127.0.0.1", PORT), timeout=2) as sock:
+            sock.sendall(msg)
+            sock.settimeout(1)
+            try:
+                sock.recv(4096)
+            except Exception:
+                pass
+        return True
+    except Exception as exc:
+        log(f"kanata TCP ({PORT}) 不可用：{exc}")
+        return False
+
+
+def main():
+    current = None
+    ticks = 0
+    # 每 ~15s 重发一次：kanata 重启后它自己回到 base，而本脚本的 current 还是旧值，
+    # 不重发就会一直不同步。
+    resend_every = max(1, int(15 / POLL))
+    while True:
+        ticks += 1
+        want = wanted_layer()
+        if want != current or ticks % resend_every == 0:
+            if send_layer(want):
+                if want != current:
+                    log(f"layer: {current} -> {want}")
+                current = want
+        time.sleep(POLL)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)

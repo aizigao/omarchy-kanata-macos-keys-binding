@@ -1,0 +1,18 @@
+[Unit]
+Description=kanata key remapper (macOS-like modifiers + Emacs layers)
+# 和 omarchy-fcitx5.service 同样的 guard：输入设备在会话里才有 uaccess ACL，
+# 没有 WAYLAND_DISPLAY 就说明不在图形会话里，不用起。
+After=graphical-session.target
+PartOf=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=simple
+# -p 10000        : TCP server，给 kanata-window-layer 发 ChangeLayer 用
+# --log-layer-changes : layer 切换写进 journal，便于排查
+ExecStart=/usr/bin/kanata --cfg %h/.config/kanata/macos-emacs.kbd -p 10000 --log-layer-changes
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

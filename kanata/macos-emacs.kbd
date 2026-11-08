@@ -1,0 +1,925 @@
+;; macOS 风格修饰键 + Emacs 编辑键 —— xremap config.yaml 的 kanata 版
+;; 本文件由 ~/.config/kanata/gen.py 生成，不要手改（改 gen.py 后重新生成）。
+;;
+;; 物理键 ↔ 输出（xremap 的 modmap macos-like）：
+;;   CapsLock  按住 -> 右 Ctrl（terminal）或 emacs 层（base/editor/zed）
+;;             单击 -> Esc
+;;   Alt_L     -> 左 Ctrl（macOS 的 ⌘ 位）；按住它还会进 meta 层（editor 里进 meta-editor，见下）
+;;   Ctrl_L    -> Alt（macOS 的 ⌥ 位）；按住它还会进 alt 层（见下）
+;;   Esc       -> `        Alt_R -> Left
+;;
+;; base layer 由 ~/.local/bin/kanata-window-layer 按当前窗口/浮层切换：
+;;   base           默认；omarchy menu / snippets 面板也走这里
+;;   terminal       kitty / alacritty —— 终端里两条 Emacs 规则都不生效
+;;   editor         jetbrains-* / Code / Windsurf —— 只有规则一（Ctrl_R-b/f/p/n/a/e、M-*）生效，
+;;                  规则二（Ctrl_R-w/y/m/j/k…）刻意不生效：那是 IDE 自己的 Ctrl+W/Ctrl+K 等
+;;   zed            同 editor；物理左 Alt+C/V 输出 Ctrl+Shift+C/V，编辑器和终端统一复制粘贴
+;;
+;; 派生层（由上面几层按住修饰键进入）：
+;;   emacs / emacs-editor   按住 CapsLock；未改写的键继续带右 Ctrl（caps+t 还是 Ctrl+t）
+;;   alt / alt-editor       按住物理 Ctrl（= Alt）；未改写的键继续带 Alt（Alt+Tab 照旧）
+;;   meta-editor            只在 editor 层出现（代替 meta）：同 meta，但 w 发宏「Ctrl+W 然后 C」
+;;   emacs-mark             Ctrl+Alt+Space 开关；b/f/p/n 变成 Shift+方向（选区）
+;;   meta                   按住物理 Alt（= ⌘）；c/v 发 Super+C/V 交给 omarchy 的
+;;                          Universal copy/paste（当前 Omarchy：非终端 Ctrl+C/V，
+;;                          终端 Ctrl+Shift+C/V）；另按 Shift 或在 v 上另按物理 Super 时：
+;;                          ⌘+Shift+C/V 是 Ctrl+Shift+C/V，⌘+Super+V 是剪贴板历史；
+;;                          持续保持左 Ctrl，支持 ⌘+单击/滚轮；c/v 结束后恢复左 Ctrl
+;;
+;; 只有 defsrc 里的键会被接管，其余键原样通过（process-unmapped-keys no）。
+;; defsrc 末尾的 lmet/rmet/lsft/rsft 只为让层里的 (input real ...) 能读到它们，各层原样透传。
+
+(defcfg
+  process-unmapped-keys no
+  linux-dev ( /dev/input/by-id/usb-winkeyless.kr_ps2avrGB-event-kbd /dev/input/by-id/usb-XCTECH_Wireless_Receiver-if01-event-kbd )
+)
+
+(defsrc
+  caps  lalt  lctl  esc  ralt  q  w  e  r  t  y  u  i  o  p  a  s  d  f  g  h  j  k  l  z  x  c  v  b  n  m  1  2  3  4  5  6  7  8  9  0  -  =  [  ]  ;  '  ,  .  /  \  `  tab  ret  spc  bspc  del  up  down  left  right  home  end  pgup  pgdn  lmet  rmet  lsft  rsft
+)
+
+;; base：CapsLock 进 emacs 层，物理 Ctrl 进 alt 层，物理 Alt 进 meta 层
+(deflayer base
+  (tap-hold-press 200 200 esc (layer-while-held emacs))
+  (multi lctl (layer-while-held meta))
+  (layer-while-held alt)
+  grv
+  left
+  q
+  w
+  e
+  r
+  t
+  y
+  u
+  i
+  o
+  p
+  a
+  s
+  d
+  f
+  g
+  h
+  j
+  k
+  l
+  z
+  x
+  c
+  v
+  b
+  n
+  m
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  0
+  -
+  =
+  [
+  ]
+  ;
+  '
+  ,
+  .
+  /
+  \
+  `
+  tab
+  ret
+  spc
+  bspc
+  del
+  up
+  down
+  left
+  right
+  home
+  end
+  pgup
+  pgdn
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; terminal：两条 Emacs 规则都不生效，修饰键只剩 modmap 本身 + meta
+(deflayer terminal
+  (tap-hold-press 200 200 esc rctl)
+  (multi lctl (layer-while-held meta))
+  lalt
+  grv
+  left
+  q
+  w
+  e
+  r
+  t
+  y
+  u
+  i
+  o
+  p
+  a
+  s
+  d
+  f
+  g
+  h
+  j
+  k
+  l
+  z
+  x
+  c
+  v
+  b
+  n
+  m
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  0
+  -
+  =
+  [
+  ]
+  ;
+  '
+  ,
+  .
+  /
+  \
+  `
+  tab
+  ret
+  spc
+  bspc
+  del
+  up
+  down
+  left
+  right
+  home
+  end
+  pgup
+  pgdn
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; editor：只有规则一（IDE 里 Ctrl+W/Ctrl+K 等要留给 IDE 自己）
+(deflayer editor
+  (tap-hold-press 200 200 esc (layer-while-held emacs-editor))
+  (multi lctl (layer-while-held meta-editor))
+  (layer-while-held alt-editor)
+  grv
+  left
+  q
+  w
+  e
+  r
+  t
+  y
+  u
+  i
+  o
+  p
+  a
+  s
+  d
+  f
+  g
+  h
+  j
+  k
+  l
+  z
+  x
+  c
+  v
+  b
+  n
+  m
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  0
+  -
+  =
+  [
+  ]
+  ;
+  '
+  ,
+  .
+  /
+  \
+  `
+  tab
+  ret
+  spc
+  bspc
+  del
+  up
+  down
+  left
+  right
+  home
+  end
+  pgup
+  pgdn
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; Zed：右 Ctrl 的 Emacs 规则同 editor；左 Alt+C/V 专用复制粘贴
+(deflayer zed
+  (tap-hold-press 200 200 esc (layer-while-held emacs-editor))
+  (multi lctl (layer-while-held meta-zed))
+  (layer-while-held alt-editor)
+  grv
+  left
+  q
+  w
+  e
+  r
+  t
+  y
+  u
+  i
+  o
+  p
+  a
+  s
+  d
+  f
+  g
+  h
+  j
+  k
+  l
+  z
+  x
+  c
+  v
+  b
+  n
+  m
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  0
+  -
+  =
+  [
+  ]
+  ;
+  '
+  ,
+  .
+  /
+  \
+  `
+  tab
+  ret
+  spc
+  bspc
+  del
+  up
+  down
+  left
+  right
+  home
+  end
+  pgup
+  pgdn
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; meta：按住物理 Alt（⌘ 位）；c/v 例外，其余键逐键带 Ctrl
+(deflayer meta
+  (tap-hold-press 200 200 esc rctl)
+  lctl
+  lalt
+  grv
+  left
+  (multi lctl q)
+  (multi lctl w)
+  (multi lctl e)
+  (multi lctl r)
+  (multi lctl t)
+  (multi lctl y)
+  (multi lctl u)
+  (multi lctl i)
+  (multi lctl o)
+  (multi lctl p)
+  (multi lctl a)
+  (multi lctl s)
+  (multi lctl d)
+  (multi lctl f)
+  (multi lctl g)
+  (multi lctl h)
+  (multi lctl j)
+  (multi lctl k)
+  (multi lctl l)
+  (multi lctl z)
+  (multi lctl x)
+  (switch ((input real lsft) (input real rsft)) (multi lctl c) break () (unmod (lctl) lmet c) break)
+  (switch ((input real lmet) (input real rmet) (input real lsft) (input real rsft)) (multi lctl v) break () (unmod (lctl) lmet v) break)
+  (multi lctl b)
+  (multi lctl n)
+  (multi lctl m)
+  (multi lctl 1)
+  (multi lctl 2)
+  (multi lctl 3)
+  (multi lctl 4)
+  (multi lctl 5)
+  (multi lctl 6)
+  (multi lctl 7)
+  (multi lctl 8)
+  (multi lctl 9)
+  (multi lctl 0)
+  (multi lctl -)
+  (multi lctl =)
+  (multi lctl [)
+  (multi lctl ])
+  (multi lctl ;)
+  (multi lctl ')
+  (multi lctl ,)
+  (multi lctl .)
+  (multi lctl /)
+  (multi lctl \)
+  (multi lctl `)
+  (multi lctl tab)
+  (multi lctl ret)
+  (multi lctl spc)
+  (multi lctl bspc)
+  (multi lctl del)
+  (multi lctl up)
+  (multi lctl down)
+  (multi lctl left)
+  (multi lctl right)
+  (multi lctl home)
+  (multi lctl end)
+  (multi lctl pgup)
+  (multi lctl pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; meta-editor：同 meta，但 w 发 chord（Ctrl+W 然后 C）——只给 editor 层用
+(deflayer meta-editor
+  (tap-hold-press 200 200 esc rctl)
+  lctl
+  lalt
+  grv
+  left
+  (multi lctl q)
+  (macro C-w 80 (unmod (lctl) c))
+  (multi lctl e)
+  (multi lctl r)
+  (multi lctl t)
+  (multi lctl y)
+  (multi lctl u)
+  (multi lctl i)
+  (multi lctl o)
+  (multi lctl p)
+  (multi lctl a)
+  (multi lctl s)
+  (multi lctl d)
+  (multi lctl f)
+  (multi lctl g)
+  (multi lctl h)
+  (multi lctl j)
+  (multi lctl k)
+  (multi lctl l)
+  (multi lctl z)
+  (multi lctl x)
+  (switch ((input real lsft) (input real rsft)) (multi lctl c) break () (unmod (lctl) lmet c) break)
+  (switch ((input real lmet) (input real rmet) (input real lsft) (input real rsft)) (multi lctl v) break () (unmod (lctl) lmet v) break)
+  (multi lctl b)
+  (multi lctl n)
+  (multi lctl m)
+  (multi lctl 1)
+  (multi lctl 2)
+  (multi lctl 3)
+  (multi lctl 4)
+  (multi lctl 5)
+  (multi lctl 6)
+  (multi lctl 7)
+  (multi lctl 8)
+  (multi lctl 9)
+  (multi lctl 0)
+  (multi lctl -)
+  (multi lctl =)
+  (multi lctl [)
+  (multi lctl ])
+  (multi lctl ;)
+  (multi lctl ')
+  (multi lctl ,)
+  (multi lctl .)
+  (multi lctl /)
+  (multi lctl \)
+  (multi lctl `)
+  (multi lctl tab)
+  (multi lctl ret)
+  (multi lctl spc)
+  (multi lctl bspc)
+  (multi lctl del)
+  (multi lctl up)
+  (multi lctl down)
+  (multi lctl left)
+  (multi lctl right)
+  (multi lctl home)
+  (multi lctl end)
+  (multi lctl pgup)
+  (multi lctl pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; Zed 编辑器与终端都用 Ctrl+Shift+C/V；右 Ctrl+C 不经过本层
+(deflayer meta-zed
+  (tap-hold-press 200 200 esc rctl)
+  lctl
+  lalt
+  grv
+  left
+  (multi lctl q)
+  (macro C-w 80 (unmod (lctl) c))
+  (multi lctl e)
+  (multi lctl r)
+  (multi lctl t)
+  (multi lctl y)
+  (multi lctl u)
+  (multi lctl i)
+  (multi lctl o)
+  (multi lctl p)
+  (multi lctl a)
+  (multi lctl s)
+  (multi lctl d)
+  (multi lctl f)
+  (multi lctl g)
+  (multi lctl h)
+  (multi lctl j)
+  (multi lctl k)
+  (multi lctl l)
+  (multi lctl z)
+  (multi lctl x)
+  (multi lctl lsft c)
+  (multi lctl lsft v)
+  (multi lctl b)
+  (multi lctl n)
+  (multi lctl m)
+  (multi lctl 1)
+  (multi lctl 2)
+  (multi lctl 3)
+  (multi lctl 4)
+  (multi lctl 5)
+  (multi lctl 6)
+  (multi lctl 7)
+  (multi lctl 8)
+  (multi lctl 9)
+  (multi lctl 0)
+  (multi lctl -)
+  (multi lctl =)
+  (multi lctl [)
+  (multi lctl ])
+  (multi lctl ;)
+  (multi lctl ')
+  (multi lctl ,)
+  (multi lctl .)
+  (multi lctl /)
+  (multi lctl \)
+  (multi lctl `)
+  (multi lctl tab)
+  (multi lctl ret)
+  (multi lctl spc)
+  (multi lctl bspc)
+  (multi lctl del)
+  (multi lctl up)
+  (multi lctl down)
+  (multi lctl left)
+  (multi lctl right)
+  (multi lctl home)
+  (multi lctl end)
+  (multi lctl pgup)
+  (multi lctl pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+;; emacs：按住 CapsLock；规则一 + 规则二
+(deflayer emacs
+  (tap-hold-press 200 200 esc rctl)
+  (multi lctl (layer-while-held meta))
+  (layer-while-held alt)
+  grv
+  left
+  (multi rctl q)
+  (multi lctl x)
+  end
+  (multi lsft f3)
+  (multi rctl t)
+  (multi lctl v)
+  (multi rctl u)
+  (multi rctl i)
+  (macro ret left)
+  up
+  home
+  (multi lctl f)
+  del
+  right
+  (multi rctl g)
+  bspc
+  ret
+  (macro S-end C-x)
+  (multi rctl l)
+  (multi rctl z)
+  (multi rctl x)
+  (multi rctl c)
+  (multi rctl v)
+  left
+  down
+  ret
+  (multi rctl 1)
+  (multi rctl 2)
+  (multi rctl 3)
+  (multi rctl 4)
+  (multi rctl 5)
+  (multi rctl 6)
+  (multi rctl 7)
+  (multi rctl 8)
+  (multi rctl 9)
+  (multi rctl 0)
+  (multi rctl -)
+  (multi rctl =)
+  (multi rctl [)
+  (multi rctl ])
+  (multi rctl ;)
+  (multi rctl ')
+  (multi rctl ,)
+  (multi rctl .)
+  (multi lctl z)
+  (multi rctl \)
+  (multi rctl `)
+  (multi rctl tab)
+  (multi rctl ret)
+  (multi rctl spc)
+  (multi rctl bspc)
+  (multi rctl del)
+  (multi rctl up)
+  (multi rctl down)
+  (multi rctl left)
+  (multi rctl right)
+  (multi rctl home)
+  (multi rctl end)
+  (multi rctl pgup)
+  (multi rctl pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; emacs-editor：按住 CapsLock；只有规则一
+(deflayer emacs-editor
+  (tap-hold-press 200 200 esc rctl)
+  (multi lctl (layer-while-held meta))
+  (layer-while-held alt-editor)
+  grv
+  left
+  (multi rctl q)
+  (multi rctl w)
+  end
+  (multi rctl r)
+  (multi rctl t)
+  (multi rctl y)
+  (multi rctl u)
+  (multi rctl i)
+  (multi rctl o)
+  up
+  home
+  (multi rctl s)
+  (multi rctl d)
+  right
+  (multi rctl g)
+  (multi rctl h)
+  (multi rctl j)
+  (multi rctl k)
+  (multi rctl l)
+  (multi rctl z)
+  (multi rctl x)
+  (multi rctl c)
+  (multi rctl v)
+  left
+  down
+  (multi rctl m)
+  (multi rctl 1)
+  (multi rctl 2)
+  (multi rctl 3)
+  (multi rctl 4)
+  (multi rctl 5)
+  (multi rctl 6)
+  (multi rctl 7)
+  (multi rctl 8)
+  (multi rctl 9)
+  (multi rctl 0)
+  (multi rctl -)
+  (multi rctl =)
+  (multi rctl [)
+  (multi rctl ])
+  (multi rctl ;)
+  (multi rctl ')
+  (multi rctl ,)
+  (multi rctl .)
+  (multi rctl /)
+  (multi rctl \)
+  (multi rctl `)
+  (multi rctl tab)
+  (multi rctl ret)
+  (multi rctl spc)
+  (multi rctl bspc)
+  (multi rctl del)
+  (multi rctl up)
+  (multi rctl down)
+  (multi rctl left)
+  (multi rctl right)
+  (multi rctl home)
+  (multi rctl end)
+  (multi rctl pgup)
+  (multi rctl pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; alt：按住物理 Ctrl（= Alt）；规则一 + 规则二，Alt+Space 开 mark
+(deflayer alt
+  (tap-hold-press 200 200 esc ralt)
+  (multi lctl (layer-while-held meta))
+  lalt
+  grv
+  left
+  (multi lalt q)
+  (multi lctl c)
+  (multi lalt e)
+  (multi lalt r)
+  (multi lalt t)
+  (multi lalt y)
+  (multi lalt u)
+  (multi lalt i)
+  (multi lalt o)
+  (multi lalt p)
+  (multi lalt a)
+  (multi lalt s)
+  (multi lctl del)
+  (multi lctl right)
+  (multi lalt g)
+  (multi lalt h)
+  (multi lalt j)
+  (multi lalt k)
+  (multi lalt l)
+  (multi lalt z)
+  (multi lalt x)
+  (multi lalt c)
+  pgup
+  (multi lctl left)
+  (multi lalt n)
+  (multi lalt m)
+  (multi lalt 1)
+  (multi lalt 2)
+  (multi lalt 3)
+  (multi lalt 4)
+  (multi lalt 5)
+  (multi lalt 6)
+  (multi lalt 7)
+  (multi lalt 8)
+  (multi lalt 9)
+  (multi lalt 0)
+  (multi lalt -)
+  (multi lalt =)
+  (multi lalt [)
+  (multi lalt ])
+  (multi lalt ;)
+  (multi lalt ')
+  (multi lctl home)
+  (multi lctl end)
+  (multi lalt /)
+  (multi lalt \)
+  (multi lalt `)
+  (multi lalt tab)
+  (multi lalt ret)
+  (layer-toggle emacs-mark)
+  (multi lctl bspc)
+  (multi lalt del)
+  (multi lalt up)
+  (multi lalt down)
+  (multi lalt left)
+  (multi lalt right)
+  (multi lalt home)
+  (multi lalt end)
+  (multi lalt pgup)
+  (multi lalt pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; alt-editor：按住物理 Ctrl；只有规则一
+(deflayer alt-editor
+  (tap-hold-press 200 200 esc ralt)
+  (multi lctl (layer-while-held meta))
+  lalt
+  grv
+  left
+  (multi lalt q)
+  (multi lalt w)
+  (multi lalt e)
+  (multi lalt r)
+  (multi lalt t)
+  (multi lalt y)
+  (multi lalt u)
+  (multi lalt i)
+  (multi lalt o)
+  (multi lalt p)
+  (multi lalt a)
+  (multi lalt s)
+  (multi lalt d)
+  (multi lctl right)
+  (multi lalt g)
+  (multi lalt h)
+  (multi lalt j)
+  (multi lalt k)
+  (multi lalt l)
+  (multi lalt z)
+  (multi lalt x)
+  (multi lalt c)
+  pgup
+  (multi lctl left)
+  (multi lalt n)
+  (multi lalt m)
+  (multi lalt 1)
+  (multi lalt 2)
+  (multi lalt 3)
+  (multi lalt 4)
+  (multi lalt 5)
+  (multi lalt 6)
+  (multi lalt 7)
+  (multi lalt 8)
+  (multi lalt 9)
+  (multi lalt 0)
+  (multi lalt -)
+  (multi lalt =)
+  (multi lalt [)
+  (multi lalt ])
+  (multi lalt ;)
+  (multi lalt ')
+  (multi lctl home)
+  (multi lctl end)
+  (multi lalt /)
+  (multi lalt \)
+  (multi lalt `)
+  (multi lalt tab)
+  (multi lalt ret)
+  (multi lalt spc)
+  (multi lalt bspc)
+  (multi lalt del)
+  (multi lalt up)
+  (multi lalt down)
+  (multi lalt left)
+  (multi lalt right)
+  (multi lalt home)
+  (multi lalt end)
+  (multi lalt pgup)
+  (multi lalt pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; emacs-mark：Ctrl+Alt+Space 开/关的选区模式
+(deflayer emacs-mark
+  (tap-hold-press 200 200 esc rctl)
+  (multi lctl (layer-while-held meta))
+  (layer-while-held alt)
+  grv
+  left
+  (multi rctl q)
+  (multi lctl x)
+  end
+  (multi lsft f3)
+  (multi rctl t)
+  (multi lctl v)
+  (multi rctl u)
+  (multi rctl i)
+  (macro ret left)
+  (multi lsft up)
+  home
+  (multi lctl f)
+  del
+  (multi lsft right)
+  (multi rctl g)
+  bspc
+  ret
+  (macro S-end C-x)
+  (multi rctl l)
+  (multi rctl z)
+  (multi rctl x)
+  (multi rctl c)
+  (multi rctl v)
+  (multi lsft left)
+  (multi lsft down)
+  ret
+  (multi rctl 1)
+  (multi rctl 2)
+  (multi rctl 3)
+  (multi rctl 4)
+  (multi rctl 5)
+  (multi rctl 6)
+  (multi rctl 7)
+  (multi rctl 8)
+  (multi rctl 9)
+  (multi rctl 0)
+  (multi rctl -)
+  (multi rctl =)
+  (multi rctl [)
+  (multi rctl ])
+  (multi rctl ;)
+  (multi rctl ')
+  (multi rctl ,)
+  (multi rctl .)
+  (multi lctl z)
+  (multi rctl \)
+  (multi rctl `)
+  (multi rctl tab)
+  (multi rctl ret)
+  (layer-toggle emacs-mark)
+  (multi rctl bspc)
+  (multi rctl del)
+  (multi rctl up)
+  (multi rctl down)
+  (multi rctl left)
+  (multi rctl right)
+  (multi rctl home)
+  (multi rctl end)
+  (multi rctl pgup)
+  (multi rctl pgdn)
+  lmet
+  rmet
+  lsft
+  rsft
+)
+
+;; 已知近似：
+;;   1) alt 层的 ⌥, / ⌥. 输出 Ctrl+Home / Ctrl+End；⌥⇧, / ⌥⇧. 现在能分辨了，
+;;      但仍归同一个输出（xremap 里只有 M-Shift-, 是 Ctrl+Home；要拆开说一声）。
+;;   2) xremap 的 Ctrl_R-Shift-ro 那条没迁移（'ro' 不在你的键盘上，原本也不会触发）。
+;;   3) mark 模式未实现 xremap 的 with_mark 自动清除；base 中物理左 Ctrl+Space 开关。
+;;      mark 层本身可用 Space 关闭，窗口切层脚本也会重新选择基础层。
+;;   4) meta 层逐键补 Ctrl，所以 ⌘+Shift+<其它键>（如 ⌘+Shift+Left）依旧是 Ctrl+Shift+Left。
+;;   5) 按住 ⌘ 时持续保持左 Ctrl；鼠标、滚轮及 defsrc 外的键也能带 Ctrl。
+;;   6) meta-editor 只改写 w，其余键仍是 Ctrl+X（与 meta 一致）。宏是「Ctrl+W 松开、再按 C」，
+;;      编辑器端必须认得 ctrl-w 前缀（vim 模式的窗口前缀满足）；其它窗口走 meta，仍是纯 Ctrl+W。
