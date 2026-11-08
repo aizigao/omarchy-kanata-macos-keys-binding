@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="640" viewBox="0 0 1100 640" role="img" aria-labelledby="title desc" lang="en">
+  <title id="title">macOS-style positions: physical keys and Kanata output</title>
+  <desc id="desc">Left Alt holds Ctrl at the Command position. Left Ctrl maps to Alt. CapsLock taps Escape and holds an Emacs layer or right Ctrl in terminals. Right Ctrl and Super pass through.</desc>
+  <defs>
+    <style>text{font-family:system-ui,sans-serif;fill:#e2e8f0}.h{font-size:28px;font-weight:700}.label{font-size:19px;font-weight:600}.small{font-size:16px;fill:#cbd5e1}.key{fill:#1e293b;stroke:#64748b;stroke-width:2}.arrow{stroke:#38bdf8;stroke-width:3;marker-end:url(#a)}</style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#38bdf8" stroke-width="2"/></marker>
+  </defs>
+  <rect width="1100" height="640" rx="20" fill="#0f172a"/>
+  <text x="40" y="55" class="h">Physical keys → Kanata output → Everyday use</text>
+  <text x="40" y="88" class="small">Left Alt occupies the Command position; applications still receive Linux shortcuts.</text>
+  <text x="50" y="134" class="small">Physical key</text><text x="365" y="134" class="small">Output / layer</text><text x="715" y="134" class="small">Purpose</text>
+  <g>
+    <rect x="40" y="155" width="230" height="65" rx="12" class="key"/><text x="60" y="195" class="label">Left Alt (⌘ position)</text>
+    <path d="M280 187H335" class="arrow"/><rect x="355" y="155" width="305" height="65" rx="12" class="key"/><text x="375" y="195" class="label">Hold Ctrl + meta layer</text>
+    <text x="705" y="182" class="label">Shortcuts / mouse combinations</text><text x="705" y="208" class="small">C/V use the clipboard routing diagram</text>
+    <rect x="40" y="240" width="230" height="65" rx="12" class="key"/><text x="60" y="280" class="label">Left Ctrl (⌥ position)</text>
+    <path d="M280 272H335" class="arrow"/><rect x="355" y="240" width="305" height="65" rx="12" class="key"/><text x="375" y="280" class="label">Alt / alt layer</text>
+    <text x="705" y="267" class="label">Meta editing keys / Alt+Tab</text><text x="705" y="293" class="small">Some mappings depend on window type</text>
+    <rect x="40" y="325" width="230" height="65" rx="12" class="key"/><text x="60" y="365" class="label">CapsLock</text>
+    <path d="M280 357H335" class="arrow"/><rect x="355" y="325" width="305" height="65" rx="12" class="key"/><text x="375" y="352" class="label">Tap Esc · Hold editing layer</text><text x="375" y="378" class="small">In standalone terminals: hold right Ctrl</text>
+    <text x="705" y="352" class="label">Emacs navigation</text><text x="705" y="378" class="small">B/F/P/N: arrows · A/E: Home/End</text>
+    <rect x="40" y="410" width="230" height="65" rx="12" class="key"/><text x="60" y="450" class="label">Right Ctrl / Super</text>
+    <path d="M280 442H335" class="arrow"/><rect x="355" y="410" width="305" height="65" rx="12" class="key"/><text x="375" y="450" class="label">Pass through unchanged</text>
+    <text x="705" y="437" class="label">Interrupt / desktop shortcuts</text><text x="705" y="463" class="small">Right Ctrl does not activate Emacs layers</text>
+  </g>
+  <rect x="40" y="510" width="1020" height="96" rx="12" fill="#172554"/>
+  <text x="60" y="542" class="label">Differences from macOS</text>
+  <text x="60" y="570" class="small">Left Alt+Tab → Ctrl+Tab (tabs) · Left Alt+Left/Right → Ctrl+Left/Right (usually word navigation)</text>
+  <text x="60" y="594" class="small">Esc → backtick · Right Alt → Left arrow · Left Alt+W in IDEs / Zed → Vim window-close macro</text>
+</svg>

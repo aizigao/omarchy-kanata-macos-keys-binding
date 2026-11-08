@@ -8,9 +8,9 @@ This repository captures a personal configuration that uses the physical left Al
 
 ## Key mapping
 
-![Physical keys and their output (Chinese labels)](docs/key-map.svg)
+![Physical keys and their output](docs/key-map-en.svg)
 
-“Left Alt,” “left Ctrl,” and “CapsLock” below refer to physical keys. Output refers to the keys received by applications. The SVG diagrams currently have Chinese labels; the tables below explain the same mappings in English.
+“Left Alt,” “left Ctrl,” and “CapsLock” below refer to physical keys. Output refers to the keys received by applications.
 
 | Physical action | Output / behavior |
 | --- | --- |
@@ -32,7 +32,7 @@ In regular applications / editors, left Ctrl+B/F moves by word, left Ctrl+V send
 
 ## Copy and paste depend on Omarchy's Super+C/V
 
-![Clipboard routing (Chinese labels)](docs/clipboard-flow.svg)
+![Clipboard routing](docs/clipboard-flow-en.svg)
 
 **Left Alt+C/V in regular applications, IDEs, and standalone terminals still depends on Omarchy's Universal copy/paste bindings.** Kanata translates the physical keys; Omarchy selects the shortcut to send based on the window type.
 

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="720" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc" lang="en">
+  <title id="title">Clipboard routing: Omarchy and Zed</title>
+  <desc id="desc">For regular applications and standalone terminals, Kanata converts physical left Alt+C/V to Super+C/V. Omarchy forwards Ctrl+C/V to applications or Ctrl+Shift+C/V to terminals. Zed receives Ctrl+Shift+C/V directly.</desc>
+  <defs>
+    <style>text{font-family:system-ui,sans-serif;fill:#e2e8f0}.h{font-size:27px;font-weight:700}.label{font-size:20px;font-weight:600}.small{font-size:16px;fill:#cbd5e1}.box{fill:#1e293b;stroke:#64748b;stroke-width:2}.arrow{fill:none;stroke:#38bdf8;stroke-width:3;marker-end:url(#a)}</style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#38bdf8" stroke-width="2"/></marker>
+  </defs>
+  <rect width="1000" height="720" rx="20" fill="#0f172a"/>
+  <text x="40" y="53" class="h">Left Alt + C / V: who handles copy and paste?</text>
+  <text x="40" y="86" class="small">The regular path depends on Omarchy's Super+C/V bindings; Zed has a dedicated path.</text>
+  <rect x="330" y="115" width="340" height="65" rx="12" class="box"/><text x="365" y="155" class="label">Physical left Alt + C / V</text>
+  <path d="M500 180V205H265V235" class="arrow"/><path d="M500 205H755V235" class="arrow"/>
+  <rect x="65" y="245" width="400" height="90" rx="12" class="box"/><text x="90" y="280" class="label">base / terminal / editor</text><text x="90" y="310" class="small">Kanata suppresses Ctrl → Super+C/V</text>
+  <rect x="565" y="245" width="370" height="90" rx="12" class="box"/><text x="590" y="280" class="label">Dedicated zed layer</text><text x="590" y="310" class="small">Kanata → Ctrl+Shift+C/V</text>
+  <path d="M265 335V375" class="arrow"/><path d="M755 335V490" class="arrow"/>
+  <rect x="65" y="385" width="400" height="80" rx="12" fill="#172554" stroke="#38bdf8" stroke-width="2"/><text x="90" y="418" class="label">Omarchy Universal copy/paste</text><text x="90" y="447" class="small">Detects terminals by the window's tag</text>
+  <path d="M265 465V485H140V515" class="arrow"/><path d="M265 485H385V515" class="arrow"/>
+  <rect x="40" y="525" width="205" height="95" rx="12" class="box"/><text x="60" y="560" class="label">Regular app / IDE</text><text x="60" y="594" class="small">Ctrl+C/V</text>
+  <rect x="280" y="525" width="225" height="95" rx="12" class="box"/><text x="300" y="560" class="label">Standalone terminal</text><text x="300" y="594" class="small">Ctrl+Shift+C/V</text>
+  <rect x="565" y="500" width="370" height="120" rx="12" class="box"/><text x="590" y="536" class="label">Handled directly by Zed</text><text x="590" y="568" class="small">Editor: merge the supplied keymap.json</text><text x="590" y="595" class="small">Integrated terminal: its own bindings</text>
+  <text x="40" y="666" class="small">The Omarchy path requires the desktop's Super+C/V bindings to produce application shortcuts.</text>
+  <text x="40" y="693" class="small">Shown: left Alt+C/V alone. See README for additional Shift / Super keys and version differences.</text>
+</svg>
