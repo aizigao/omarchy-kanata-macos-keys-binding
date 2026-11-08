@@ -109,7 +109,6 @@ HEADER = """\
 ;;             单击 -> Esc
 ;;   Alt_L     -> 左 Ctrl（macOS 的 ⌘ 位）；按住它还会进 meta 层（editor 里进 meta-editor，见下）
 ;;   Ctrl_L    -> Alt（macOS 的 ⌥ 位）；按住它还会进 alt 层（见下）
-;;   Alt_R     -> Left
 ;;
 ;; base layer 由 ~/.local/bin/kanata-window-layer 按当前窗口/浮层切换：
 ;;   base           默认；omarchy menu / snippets 面板也走这里
@@ -141,7 +140,7 @@ def mods_for(name, lctl_action, lalt_action):
         "lalt": lalt_action,
         "lctl": lctl_action,
         "esc": "esc",
-        "ralt": "left",
+        "ralt": "ralt",
     }
 
 
@@ -160,7 +159,7 @@ def layer(name, caps_action, key_remap=None, mod_prefix=None, lctl=None, lalt=No
     lines.append(f"  {lalt_action}")
     lines.append(f"  {lctl_action}")
     lines.append("  esc")
-    lines.append("  left")
+    lines.append("  ralt")
     for key in PLAIN_KEYS:
         if key in key_remap:
             lines.append(f"  {key_remap[key]}")

@@ -23,7 +23,6 @@
 | CapsLock 按住 | 普通应用 / 编辑器进入 Emacs 层；独立终端输出右 Ctrl |
 | 物理右 Ctrl | 原样传递；终端右 Ctrl+C 仍可中断程序 |
 | 物理 Super / Shift | 原样传递，供桌面快捷键及组合键使用 |
-| 右 Alt | 左方向键 |
 
 CapsLock+B/F/P/N 在普通应用和编辑器输出左 / 右 / 上 / 下；CapsLock+A/E 输出 Home / End。只有普通应用额外启用 CapsLock+W/Y 剪切 / 粘贴、D/H 删除、K 剪切到行尾、S 搜索等。**这些重映射由 CapsLock 触发，不是物理右 Ctrl。**
 

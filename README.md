@@ -23,7 +23,6 @@ This repository captures a personal configuration that uses the physical left Al
 | Hold CapsLock | Activate Emacs layers in regular applications / editors; output right Ctrl in standalone terminals |
 | Physical right Ctrl | Pass through unchanged; right Ctrl+C can still interrupt terminal programs |
 | Physical Super / Shift | Pass through for desktop shortcuts and key combinations |
-| Right Alt | Left arrow |
 
 In regular applications and editors, CapsLock+B/F/P/N produces Left / Right / Up / Down, and CapsLock+A/E produces Home / End. Regular applications additionally support CapsLock+W/Y for cut / paste, D/H for deletion, K for cutting to the end of the line, S for search, and more. **These remappings are triggered by CapsLock, not the physical right Ctrl key.**
 

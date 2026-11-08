@@ -6,7 +6,6 @@
 ;;             单击 -> Esc
 ;;   Alt_L     -> 左 Ctrl（macOS 的 ⌘ 位）；按住它还会进 meta 层（editor 里进 meta-editor，见下）
 ;;   Ctrl_L    -> Alt（macOS 的 ⌥ 位）；按住它还会进 alt 层（见下）
-;;   Alt_R     -> Left
 ;;
 ;; base layer 由 ~/.local/bin/kanata-window-layer 按当前窗口/浮层切换：
 ;;   base           默认；omarchy menu / snippets 面板也走这里
@@ -44,7 +43,7 @@
   (multi lctl (layer-while-held meta))
   (layer-while-held alt)
   esc
-  left
+  ralt
   q
   w
   e
@@ -117,7 +116,7 @@
   (multi lctl (layer-while-held meta))
   lalt
   esc
-  left
+  ralt
   q
   w
   e
@@ -190,7 +189,7 @@
   (multi lctl (layer-while-held meta-editor))
   (layer-while-held alt-editor)
   esc
-  left
+  ralt
   q
   w
   e
@@ -263,7 +262,7 @@
   (multi lctl (layer-while-held meta-zed))
   (layer-while-held alt-editor)
   esc
-  left
+  ralt
   q
   w
   e
@@ -336,7 +335,7 @@
   lctl
   lalt
   esc
-  left
+  ralt
   (multi lctl q)
   (multi lctl w)
   (multi lctl e)
@@ -409,7 +408,7 @@
   lctl
   lalt
   esc
-  left
+  ralt
   (multi lctl q)
   (macro C-w 80 (unmod (lctl) c))
   (multi lctl e)
@@ -482,7 +481,7 @@
   lctl
   lalt
   esc
-  left
+  ralt
   (multi lctl q)
   (macro C-w 80 (unmod (lctl) c))
   (multi lctl e)
@@ -554,7 +553,7 @@
   (multi lctl (layer-while-held meta))
   (layer-while-held alt)
   esc
-  left
+  ralt
   (multi rctl q)
   (multi lctl x)
   end
@@ -627,7 +626,7 @@
   (multi lctl (layer-while-held meta))
   (layer-while-held alt-editor)
   esc
-  left
+  ralt
   (multi rctl q)
   (multi rctl w)
   end
@@ -700,7 +699,7 @@
   (multi lctl (layer-while-held meta))
   lalt
   esc
-  left
+  ralt
   (multi lalt q)
   (multi lctl c)
   (multi lalt e)
@@ -773,7 +772,7 @@
   (multi lctl (layer-while-held meta))
   lalt
   esc
-  left
+  ralt
   (multi lalt q)
   (multi lalt w)
   (multi lalt e)
@@ -846,7 +845,7 @@
   (multi lctl (layer-while-held meta))
   (layer-while-held alt)
   esc
-  left
+  ralt
   (multi rctl q)
   (multi lctl x)
   end
