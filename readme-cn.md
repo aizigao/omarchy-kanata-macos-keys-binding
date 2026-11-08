@@ -23,7 +23,6 @@
 | CapsLock 按住 | 普通应用 / 编辑器进入 Emacs 层；独立终端输出右 Ctrl |
 | 物理右 Ctrl | 原样传递；终端右 Ctrl+C 仍可中断程序 |
 | 物理 Super / Shift | 原样传递，供桌面快捷键及组合键使用 |
-| Esc | Esc |
 | 右 Alt | 左方向键 |
 
 CapsLock+B/F/P/N 在普通应用和编辑器输出左 / 右 / 上 / 下；CapsLock+A/E 输出 Home / End。只有普通应用额外启用 CapsLock+W/Y 剪切 / 粘贴、D/H 删除、K 剪切到行尾、S 搜索等。**这些重映射由 CapsLock 触发，不是物理右 Ctrl。**
@@ -146,6 +145,6 @@ journalctl --user -u kanata.service -u kanata-window-layer.service -n 80 --no-pa
 - mark 模式在 base 的左 Ctrl+Space 开关，进入后 B/F/P/N 为 Shift+方向；不会在普通编辑操作后自动清除。切层脚本还会重新选择基础层，不能把 mark 当成跨窗口持久选区。
 - 左 Ctrl+逗号 / 句号未按物理 Shift 区分不同动作。
 - 切层是轮询，存在约 0.3 秒间隔；实际延迟还取决于 Hyprland 命令执行。未知窗口默认 base。
-- 物理 Esc 现在保持为 Esc。配置中的旧 xremap / Ctrl_R 注释是迁移背景；以生成逻辑及本文按物理键描述的行为为准。
+- 配置中的旧 xremap / Ctrl_R 注释是迁移背景；以生成逻辑及本文按物理键描述的行为为准。
 
 本仓库只整理配置，不包含 Omarchy 的剪贴板实现，也不安装 OpenLogi 或修改桌面绑定。

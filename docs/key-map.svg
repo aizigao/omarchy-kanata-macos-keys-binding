@@ -26,5 +26,5 @@
   <rect x="40" y="510" width="920" height="96" rx="12" fill="#172554"/>
   <text x="60" y="542" class="label">与 macOS 仍有差异</text>
   <text x="60" y="570" class="small">左 Alt+Tab → Ctrl+Tab（切标签） · 左 Alt+左右 → Ctrl+左右（通常按词移动）</text>
-  <text x="60" y="594" class="small">物理 Esc → Esc · 右 Alt → 左方向 · IDE / Zed 的左 Alt+W 是 Vim 窗口关闭宏</text>
+  <text x="60" y="594" class="small">右 Alt → 左方向 · IDE / Zed 的左 Alt+W 是 Vim 窗口关闭宏</text>
 </svg>

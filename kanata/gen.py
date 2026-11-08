@@ -109,7 +109,7 @@ HEADER = """\
 ;;             单击 -> Esc
 ;;   Alt_L     -> 左 Ctrl（macOS 的 ⌘ 位）；按住它还会进 meta 层（editor 里进 meta-editor，见下）
 ;;   Ctrl_L    -> Alt（macOS 的 ⌥ 位）；按住它还会进 alt 层（见下）
-;;   Esc       -> Esc       Alt_R -> Left
+;;   Alt_R     -> Left
 ;;
 ;; base layer 由 ~/.local/bin/kanata-window-layer 按当前窗口/浮层切换：
 ;;   base           默认；omarchy menu / snippets 面板也走这里
@@ -273,7 +273,7 @@ def main():
     print(";;      mark 层本身可用 Space 关闭，窗口切层脚本也会重新选择基础层。")
     print(";;   4) meta 层逐键补 Ctrl，所以 ⌘+Shift+<其它键>（如 ⌘+Shift+Left）依旧是 Ctrl+Shift+Left。")
     print(";;   5) 按住 ⌘ 时持续保持左 Ctrl；鼠标、滚轮及 defsrc 外的键也能带 Ctrl。")
-    print(";;   6) 物理 Esc 保持 Esc；meta-editor 只改写 w，其余键仍是 Ctrl+X（与 meta 一致）。宏是「Ctrl+W 松开、再按 C」，")
+    print(";;   6) meta-editor 只改写 w，其余键仍是 Ctrl+X（与 meta 一致）。宏是「Ctrl+W 松开、再按 C」，")
     print(";;      编辑器端必须认得 ctrl-w 前缀（vim 模式的窗口前缀满足）；其它窗口走 meta，仍是纯 Ctrl+W。")
 
 

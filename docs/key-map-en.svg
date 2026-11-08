@@ -26,5 +26,5 @@
   <rect x="40" y="510" width="1020" height="96" rx="12" fill="#172554"/>
   <text x="60" y="542" class="label">Differences from macOS</text>
   <text x="60" y="570" class="small">Left Alt+Tab → Ctrl+Tab (tabs) · Left Alt+Left/Right → Ctrl+Left/Right (usually word navigation)</text>
-  <text x="60" y="594" class="small">Esc → Esc · Right Alt → Left arrow · Left Alt+W in IDEs / Zed → Vim window-close macro</text>
+  <text x="60" y="594" class="small">Right Alt → Left arrow · Left Alt+W in IDEs / Zed → Vim window-close macro</text>
 </svg>
