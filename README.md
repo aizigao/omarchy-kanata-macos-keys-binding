@@ -23,7 +23,7 @@ This repository captures a personal configuration that uses the physical left Al
 | Hold CapsLock | Activate Emacs layers in regular applications / editors; output right Ctrl in standalone terminals |
 | Physical right Ctrl | Pass through unchanged; right Ctrl+C can still interrupt terminal programs |
 | Physical Super / Shift | Pass through for desktop shortcuts and key combinations |
-| Esc | Backtick (`) |
+| Esc | Esc |
 | Right Alt | Left arrow |
 
 In regular applications and editors, CapsLock+B/F/P/N produces Left / Right / Up / Down, and CapsLock+A/E produces Home / End. Regular applications additionally support CapsLock+W/Y for cut / paste, D/H for deletion, K for cutting to the end of the line, S for search, and more. **These remappings are triggered by CapsLock, not the physical right Ctrl key.**
@@ -146,6 +146,6 @@ To change an installed configuration, edit `~/.config/kanata/gen.py`, regenerate
 - In base, left Ctrl+Space toggles mark mode; B/F/P/N then sends Shift+arrow. Normal editing operations do not automatically clear it. The layer switcher also reselects the base layer, so mark mode is not a persistent selection across windows.
 - Left Ctrl+comma / period does not select different actions based on physical Shift.
 - Layer selection uses polling at approximately 0.3-second intervals; actual delay also depends on Hyprland command execution. Unknown windows use base.
-- Older xremap / Ctrl_R comments describe migration history. Refer to the generator logic and the physical-key descriptions in this document for current behavior.
+- Physical Esc now remains Esc. Older xremap / Ctrl_R comments describe migration history. Refer to the generator logic and the physical-key descriptions in this document for current behavior.
 
 This repository provides configuration files. It does not include Omarchy's clipboard implementation, install OpenLogi, or modify desktop bindings.
